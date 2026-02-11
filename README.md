@@ -12,4 +12,4 @@
 ```bash
 curl -X POST "http://localhost:8000/send-message" \
      -H "Content-Type: application/json" \
-     -d '{"text": "Привет из Kafka!", "user": "QA"}'
+     -d '{"text": "Привет!", "user": "QA"}'
