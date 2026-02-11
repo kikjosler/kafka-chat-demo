@@ -12,13 +12,13 @@
 docker compose up -d
 
 
-### Отправить сообщение:
+Отправить сообщение:
 ```bash
 curl -X POST "http://localhost:8000/send-message" \
      -H "Content-Type: application/json" \
      -d '{"text": "Привет!", "user": "QA"}'
 
 
-#### Как посмотреть сообщения в Kafka UI
+Как посмотреть сообщения в Kafka UI
 http://localhost:8081
 Clusters → chat-topic → Messages
