@@ -1,14 +1,15 @@
-# Kafka Chat Demo
+# Kafka Chat Demo 🚀
 
-Микросервисная система чата: **FastAPI → Kafka → Kafka UI**
+**Микросервисный чат: FastAPI → Kafka → Kafka UI**
 
-## Стек технологий
-- Docker Compose (4 контейнера)
-- Apache Kafka + Zookeeper (wurstmeister)
-- FastAPI REST API (producer)
-- Kafka UI (мониторинг сообщений)
-- GitHub Actions (CI/CD ready)
+[![FastAPI](https://img.shields.io/badge/FastAPI-REST-blue)](https://fastapi.tiangolo.com)
+[![Docker](https://img.shields.io/badge/Docker-Compose-green)](https://docs.docker.com/compose/)
+[![Kafka](https://img.shields.io/badge/Apache%20Kafka-orange)](https://kafka.apache.org/)
 
-## Запуск
+## 🎯 Демо
+
+**Отправить сообщение:**
 ```bash
-docker compose up -d
+curl -X POST "http://localhost:8000/send-message" \
+     -H "Content-Type: application/json" \
+     -d '{"text": "Привет из Kafka!", "user": "QA"}'
