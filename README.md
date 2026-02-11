@@ -1,4 +1,4 @@
-# Kafka Chat Demo 🚀
+# Kafka Chat Demo
 
 **Микросервисный чат: FastAPI → Kafka → Kafka UI**
 
@@ -6,14 +6,18 @@
 [![Docker](https://img.shields.io/badge/Docker-Compose-green)](https://docs.docker.com/compose/)
 [![Kafka](https://img.shields.io/badge/Apache%20Kafka-orange)](https://kafka.apache.org/)
 
-## 🎯 Демо
+## Демо
 
-**Отправить сообщение:**
+## Запуск
+```bash
+docker compose up -d
+
+## Отправить сообщение:**
 ```bash
 curl -X POST "http://localhost:8000/send-message" \
      -H "Content-Type: application/json" \
      -d '{"text": "Привет!", "user": "QA"}'
 
-## 👀 Как посмотреть сообщения в Kafka UI
+## Как посмотреть сообщения в Kafka UI
 http://localhost:8081
 Clusters → chat-topic → Messages
