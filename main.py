@@ -1,39 +1,47 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import json
-import time
 from kafka import KafkaProducer
-from fastapi.responses import JSONResponse
+import time
+import os
 
 app = FastAPI(title="Kafka Chat")
-
-producer = None
-
-def get_producer():
-    global producer
-    if producer is None:
-        time.sleep(5)  # Ждём Kafka
-        producer = KafkaProducer(
-            bootstrap_servers='kafka:9092',
-            value_serializer=lambda v: json.dumps(v).encode('utf-8')
-        )
-    return producer
 
 class Message(BaseModel):
     text: str
     user: str
 
+def create_producer():
+    """Создаёт producer только при необходимости"""
+    return KafkaProducer(
+        bootstrap_servers='kafka:9092',
+        value_serializer=lambda v: json.dumps(v).encode('utf-8'),
+        client_id='fastapi-producer'
+    )
+
 @app.post("/send-message")
 async def send_message(msg: Message):
     try:
-        prod = get_producer()
-        data = msg.dict()
-        prod.send('chat-topic', data)
-        prod.flush()
-        return {"status": "sent", "message": data}
+        # Ждём Kafka 10 секунд если нужно
+        for i in range(10):
+            try:
+                producer = create_producer()
+                data = msg.dict()
+                producer.send('chat-topic', data)
+                producer.flush()
+                producer.close()
+                return {"status": "sent", "message": data}
+            except:
+                time.sleep(1)
+                continue
+        raise Exception("Kafka не доступна")
     except Exception as e:
-        return JSONResponse(status_code=500, content={"error": str(e)})
+        raise HTTPException(status_code=503, detail=f"Kafka недоступна: {str(e)}")
 
 @app.get("/")
 def root():
-    return {"msg": "FastAPI + Kafka готов! POST /send-message"}
+    return {"message": "FastAPI работает! POST /send-message для Kafka"}
+
+@app.get("/health")
+def health():
+    return {"status": "healthy"}
