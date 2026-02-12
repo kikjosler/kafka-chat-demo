@@ -7,18 +7,18 @@
 [![Kafka](https://img.shields.io/badge/Apache%20Kafka-orange)](https://kafka.apache.org/)
 
 
-## Запуск
-```bash
+### Запуск
+
 docker compose up -d
 
 
-Отправить сообщение:
-```bash
+### Отправка сообщения
+
 curl -X POST "http://localhost:8000/send-message" \
      -H "Content-Type: application/json" \
      -d '{"text": "Привет!", "user": "QA"}'
 
 
-Как посмотреть сообщения в Kafka UI
+### Как посмотреть сообщения в Kafka UI
 http://localhost:8081
 Clusters → chat-topic → Messages
