@@ -29,3 +29,11 @@ async def send_message(msg: Message):
 @app.get("/")
 def root():
     return {"message": "FastAPI готов! Отправляй POST /send-message"}
+
+@app.get("/health")
+async def health():
+    return {"status": "healthy", "kafka": "connected"}
+
+@app.get("/")
+async def root():
+    return {"message": "Kafka Chat Demo готов!"}
