@@ -6,29 +6,32 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Start full stack
-      run: |
-        docker compose up -d
-        
-    - name: Wait for services
+    - name: Build & Start Stack
+      run: docker compose up -d
+      
+    - name: Wait Services
       run: |
         sleep 30
         curl -f http://localhost:8000/health || exit 1
+        curl -f http://localhost:8081 || exit 1
         
-    - name: Install Locust
-      run: pip install locust==2.29.0
-      
+    - name: Install Locust (from requirements)
+      run: |
+        cd tests
+        pip install -r requirements.txt
+        
     - name: Run Load Test
       run: |
-        locust -f tests/locustfile.py \
+        cd tests
+        locust -f locustfile.py \
           --headless --users 5 --spawn-rate 1 \
           --run-time 20s --host=http://localhost:8000 \
           --html=report.html
         
-    - name: Upload Results
+    - name: Upload Report
       uses: actions/upload-artifact@v4
       with:
         name: locust-report
         path: |
-          report.html
+          tests/report.html
           tests/locustfile.py
