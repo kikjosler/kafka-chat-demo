@@ -1,0 +1,24 @@
+name: Kafka Load Test
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      fastapi:
+        image: kafka-chat-demo-fastapi
+      kafka:
+        image: wurstmeister/kafka
+        env:
+          KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      zookeeper:
+        image: wurstmeister/zookeeper
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run Locust
+      run: |
+        pip install locust
+        locust -f tests/locustfile.py --headless -u 50 -r 10 --run-time 1m --html report.html
+    - uses: actions/upload-artifact@v4
+      with:
+        name: load-report
+        path: report.html

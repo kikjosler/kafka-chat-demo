@@ -18,8 +18,8 @@ async def send_message(msg: Message):
         max_block_ms=5000  # Быстрый таймаут
     )
     try:
-        producer.send('chat-topic', msg.dict())
-        producer.flush(timeout=5)
+        producer.send('chat-topic', data.encode('utf-8'))
+        producer.flush(timeout=1.0)
         return {"status": "sent", "message": msg.dict()}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Kafka error: {str(e)}")
