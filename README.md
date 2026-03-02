@@ -5,7 +5,6 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-blue)](https://fastapi.tiangolo.com)
 [![Docker](https://img.shields.io/badge/Docker-Compose-green)](https://docs.docker.com/compose/)
 [![Kafka](https://img.shields.io/badge/Kafka-Production-orange)](https://kafka.apache.org/)
-[![CI/CD](https://github.com/iosifkikriasvili/kafka-chat-demo/actions/workflows/loadtest.yml/badge.svg)]
 
 
 ### Запуск
