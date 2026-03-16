@@ -15,3 +15,5 @@ locust.log
 # IDE
 .vscode/
 .idea/
+report.*
+
