@@ -3,7 +3,7 @@ from locust import HttpUser, task, between
 class ApiUser(HttpUser):
     wait_time = between(1, 3)
     
-    @task(3)  # 3x чаще
+    @task(3)
     def health_check(self):
         self.client.get("/health")
     
