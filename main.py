@@ -14,8 +14,8 @@ async def send_message(msg: Message):
     producer = KafkaProducer(
         bootstrap_servers='kafka:9092',
         value_serializer=lambda v: json.dumps(v).encode('utf-8'),
-        retries=0,  # Без повторов
-        max_block_ms=5000  # Быстрый таймаут
+        retries=0,  #Без повторов
+        max_block_ms=5000  #Быстрый таймаут
     )
     try:
         producer.send('chat-topic', data.encode('utf-8'))
